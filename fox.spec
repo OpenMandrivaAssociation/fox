@@ -1,0 +1,235 @@
+%define major		1.7
+
+%define name		fox
+%define version 1.7.6
+%define release %mkrel 1
+
+%define libname		%mklibname %{name} %{major}
+
+%define name_ex_apps	%{name}-example-apps
+
+%define icon_name_calc	%{name}-calculator.png
+%define icon_name_adie	%{name}-adie.png
+
+Summary:	The FOX C++ GUI Toolkit
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+License:	LGPL
+Group:		Development/C++
+URL:		http://www.fox-toolkit.org
+Source: 	http://www.fox-toolkit.org/ftp/%{name}-%{version}.tar.bz2
+Source1:	fox-shutterbug-16.png
+Source2:	fox-shutterbug-32.png
+Source3:	fox-shutterbug-48.png
+Source10:	%{name}_adie_16.png
+Source11:	%{name}_adie_32.png
+Source12:	%{name}_adie_48.png
+Source20:	%{name}_calc_16.png
+Source21:	%{name}_calc_32.png
+Source22:	%{name}_calc_48.png
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires:	libmesaglu-devel
+BuildRequires:  libcups-devel
+BuildRequires:  libbzip2-devel
+
+%description
+FOX is a C++-Based Library for Graphical User Interface Development
+FOX supports modern GUI features, such as Drag-and-Drop, Tooltips, Tab
+Books, Tree Lists, Icons, Multiple-Document Interfaces (MDI), timers,
+idle processing, automatic GUI updating, as well as OpenGL/Mesa for
+3D graphics.  Subclassing of basic FOX widgets allows for easy
+extension beyond the built-in widgets by application writers.
+
+%package -n %{name_ex_apps}
+Summary:	FOX example applications
+Group:		Office
+Requires:	%{libname} >= %{version}
+
+%description -n %{name_ex_apps}
+Editor, file browser and calculator, written with FOX
+
+%package -n %{libname}
+Summary:	The FOX C++ GUI Toolkit - Libraries
+Group:		System/Libraries
+
+%description -n %{libname}
+FOX is a C++-Based Library for Graphical User Interface Development
+FOX supports modern GUI features, such as Drag-and-Drop, Tooltips, Tab
+Books, Tree Lists, Icons, Multiple-Document Interfaces (MDI), timers,
+idle processing, automatic GUI updating, as well as OpenGL/Mesa for
+3D graphics.  Subclassing of basic FOX widgets allows for easy
+extension beyond the built-in widgets by application writers.
+
+%package -n %{libname}-devel
+Summary:	FOX header files
+Group:		Development/C++
+Requires:	%{libname} = %{version}
+Provides:	libfox-devel = %version-%release
+Provides:	fox%{major}-devel = %version-%release
+Provides:	libfox%{major}-devel = %version-%release
+Conflicts:	%mklibname -d fox 1.4
+
+%description -n %{libname}-devel
+FOX is a C++-Based Library for Graphical User Interface Development
+FOX supports modern GUI features, such as Drag-and-Drop, Tooltips, Tab
+Books, Tree Lists, Icons, Multiple-Document Interfaces (MDI), timers,
+idle processing, automatic GUI updating, as well as OpenGL/Mesa for
+3D graphics.  Subclassing of basic FOX widgets allows for easy
+extension beyond the built-in widgets by application writers.
+
+This package contains the necessary files to develop applications
+with FOX.
+
+%prep
+rm -rf $RPM_BUILD_ROOT
+
+%setup -q
+
+%build
+
+%configure2_5x --with-opengl=mesa --enable-cups
+
+make GL_LIBS="-lGL -lGLU"
+
+%install
+rm -rf $RPM_BUILD_ROOT installed-docs
+%makeinstall_std
+mv %buildroot%_datadir/doc/fox-%{major}/* installed-docs
+cp -p pathfinder/PathFinder $RPM_BUILD_ROOT/usr/bin
+%multiarch_binaries %buildroot%_bindir/fox-config
+mkdir -p %{buildroot}%{_menudir}
+
+cat << EOF > %{buildroot}%{_menudir}/%{name_ex_apps}
+?package(%{name_ex_apps}):\
+	needs="X11"\
+	section="More Applications/Sciences/Mathematics"\
+	title="FOX Calculator"\
+	longtitle="Calculator using the FOX toolkit"\
+	command="%{_bindir}/calculator"\
+	icon=%{icon_name_calc} xdg="true"
+?package(%{name_ex_apps}):\
+	needs="X11"\
+	section="More Applications/Editors"\
+	title="FOX Adie"\
+	longtitle="A.D.I.E. - Advanced Interactive Editor using the FOX toolkit"\
+	command="%{_bindir}/adie"\
+	icon=%{icon_name_adie} xdg="true"
+?package(%{name_ex_apps}):\
+	needs="X11"\
+	section="Multimedia/Graphics"\
+	title="FOX Shutterbug"\
+	longtitle="Takes a screenshot and saves it to a file"\
+	command="%{_bindir}/shutterbug"\
+	icon=shutterbug.png xdg="true"
+EOF
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
+cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name="FOX Calculator"
+Comment="Calculator using the FOX toolkit"
+Exec=%{_bindir}/calculator %U
+Icon=%{icon_name_calc} 
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=MandrivaLinux-MoreApplications-Science-Mathematics;Science;Math;
+EOF
+cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxadie.desktop << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name="FOX Adie"
+Comment="A.D.I.E. - Advanced Interactive Editor using the FOX toolkit"
+Exec=%{_bindir}/adie %U
+Icon=%{icon_name_adie}
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=MandrivaLinux-MoreApplications-Editors;TextEditor;
+EOF
+cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-shutterbug.desktop << EOF
+[Desktop Entry]
+Encoding=UTF-8
+Name="FOX Shutterbug"
+Comment="Takes a screenshot and saves it to a file"
+Exec=%{_bindir}/shutterbug %U
+Icon=shutterbug
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=MandrivaLinux-Multimedia-Graphics;Graphics;
+EOF
+
+install -D -m 644 %{SOURCE10} %{buildroot}%{_miconsdir}/%{icon_name_adie}
+install -D -m 644 %{SOURCE11} %{buildroot}%{_iconsdir}/%{icon_name_adie}
+install -D -m 644 %{SOURCE12} %{buildroot}%{_liconsdir}/%{icon_name_adie}
+
+install -m 644 %{SOURCE20} %{buildroot}%{_miconsdir}/%{icon_name_calc}
+install -m 644 %{SOURCE21} %{buildroot}%{_iconsdir}/%{icon_name_calc}
+install -m 644 %{SOURCE22} %{buildroot}%{_liconsdir}/%{icon_name_calc}
+
+install -m 644 %{SOURCE1} %{buildroot}%{_miconsdir}/shutterbug.png
+install -m 644 %{SOURCE2} %{buildroot}%{_iconsdir}/shutterbug.png
+install -m 644 %{SOURCE3} %{buildroot}%{_liconsdir}/shutterbug.png
+
+rm -rf %buildroot%_prefix/fox
+
+%post -n %{libname} -p /sbin/ldconfig
+
+%postun -n %{libname} -p /sbin/ldconfig
+
+%post -n %{name_ex_apps}
+%{update_menus}
+
+%postun -n %{name_ex_apps}
+%{clean_menus}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -n %{name_ex_apps}
+%defattr(-,root,root)
+%doc %{_mandir}/man1/PathFinder*
+%doc %{_mandir}/man1/adie*
+%doc %{_mandir}/man1/calculator*
+%doc %{_mandir}/man1/shutterbug.1*
+%{_bindir}/calculator
+%{_bindir}/PathFinder
+%{_bindir}/adie
+%{_bindir}/Adie.stx
+%{_bindir}/shutterbug
+%_datadir/applications/mandriva*
+%{_menudir}/%{name_ex_apps}
+%{_miconsdir}/%{icon_name_adie}
+%{_iconsdir}/%{icon_name_adie}
+%{_liconsdir}/%{icon_name_adie}
+%{_miconsdir}/%{icon_name_calc}
+%{_iconsdir}/%{icon_name_calc}
+%{_liconsdir}/%{icon_name_calc}
+%{_miconsdir}/shutterbug.png
+%{_iconsdir}/shutterbug.png
+%{_liconsdir}/shutterbug.png
+
+
+%files -n %{libname}
+%defattr(-,root,root)
+%doc AUTHORS LICENSE README
+%{_libdir}/*.so.*
+
+%files -n %{libname}-devel
+%defattr(-,root,root)
+%doc doc ADDITIONS INSTALL TRACING
+%doc installed-docs
+%doc %{_mandir}/man1/reswrap*
+%{_bindir}/reswrap
+%_bindir/fox-config
+%multiarch_bindir/fox-config
+%dir %{_includedir}/fox-%{major}
+%{_includedir}/fox-%{major}/*
+%{_libdir}/*.so
+%{_libdir}/*.a
+%attr(644,root,root) %{_libdir}/*.la
+%_libdir/pkgconfig/fox.pc
+
+
