@@ -1,10 +1,11 @@
 %define major		1.7
 
 %define name		fox
-%define version 1.7.6
+%define version 1.7.11
 %define release %mkrel 1
 
 %define libname		%mklibname %{name} %{major}
+%define libnamedev	%mklibname -d %{name}
 
 %define name_ex_apps	%{name}-example-apps
 
@@ -61,7 +62,7 @@ idle processing, automatic GUI updating, as well as OpenGL/Mesa for
 3D graphics.  Subclassing of basic FOX widgets allows for easy
 extension beyond the built-in widgets by application writers.
 
-%package -n %{libname}-devel
+%package -n %{libnamedev}
 Summary:	FOX header files
 Group:		Development/C++
 Requires:	%{libname} = %{version}
@@ -69,8 +70,9 @@ Provides:	libfox-devel = %version-%release
 Provides:	fox%{major}-devel = %version-%release
 Provides:	libfox%{major}-devel = %version-%release
 Conflicts:	%mklibname -d fox 1.4
+Obsoletes:	%mklibname -d fox 1.7
 
-%description -n %{libname}-devel
+%description -n %{libnamedev}
 FOX is a C++-Based Library for Graphical User Interface Development
 FOX supports modern GUI features, such as Drag-and-Drop, Tooltips, Tab
 Books, Tree Lists, Icons, Multiple-Document Interfaces (MDI), timers,
@@ -215,9 +217,9 @@ rm -rf $RPM_BUILD_ROOT
 %files -n %{libname}
 %defattr(-,root,root)
 %doc AUTHORS LICENSE README
-%{_libdir}/*.so.*
+%{_libdir}/*%{major}.so.0*
 
-%files -n %{libname}-devel
+%files -n %{libnamedev}
 %defattr(-,root,root)
 %doc doc ADDITIONS INSTALL TRACING
 %doc installed-docs
