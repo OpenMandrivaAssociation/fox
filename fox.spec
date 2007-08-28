@@ -128,7 +128,6 @@ EOF
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name="FOX Calculator"
 Comment="Calculator using the FOX toolkit"
 Exec=%{_bindir}/calculator %U
@@ -140,7 +139,6 @@ Categories=MandrivaLinux-MoreApplications-Science-Mathematics;Science;Math;
 EOF
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxadie.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name="FOX Adie"
 Comment="A.D.I.E. - Advanced Interactive Editor using the FOX toolkit"
 Exec=%{_bindir}/adie %U
@@ -152,7 +150,6 @@ Categories=MandrivaLinux-MoreApplications-Editors;TextEditor;
 EOF
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-shutterbug.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name="FOX Shutterbug"
 Comment="Takes a screenshot and saves it to a file"
 Exec=%{_bindir}/shutterbug %U
