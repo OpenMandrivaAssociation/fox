@@ -1,7 +1,7 @@
 %define major		1.7
 
 %define name		fox
-%define version 1.7.11
+%define version 1.7.13
 %define release %mkrel 1
 
 %define libname		%mklibname %{name} %{major}
@@ -19,7 +19,7 @@ Release:	%{release}
 License:	LGPLv2+
 Group:		Development/C++
 URL:		http://www.fox-toolkit.org
-Source: 	http://www.fox-toolkit.org/ftp/%{name}-%{version}.tar.bz2
+Source: 	http://www.fox-toolkit.org/ftp/%{name}-%{version}.tar.gz
 Source1:	fox-shutterbug-16.png
 Source2:	fox-shutterbug-32.png
 Source3:	fox-shutterbug-48.png
