@@ -16,7 +16,7 @@ Summary:	The FOX C++ GUI Toolkit
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-License:	LGPL
+License:	LGPLv2+
 Group:		Development/C++
 URL:		http://www.fox-toolkit.org
 Source: 	http://www.fox-toolkit.org/ftp/%{name}-%{version}.tar.bz2
@@ -102,62 +102,39 @@ cp -p pathfinder/PathFinder $RPM_BUILD_ROOT/usr/bin
 %multiarch_binaries %buildroot%_bindir/fox-config
 mkdir -p %{buildroot}%{_menudir}
 
-cat << EOF > %{buildroot}%{_menudir}/%{name_ex_apps}
-?package(%{name_ex_apps}):\
-	needs="X11"\
-	section="More Applications/Sciences/Mathematics"\
-	title="FOX Calculator"\
-	longtitle="Calculator using the FOX toolkit"\
-	command="%{_bindir}/calculator"\
-	icon=%{icon_name_calc} xdg="true"
-?package(%{name_ex_apps}):\
-	needs="X11"\
-	section="More Applications/Editors"\
-	title="FOX Adie"\
-	longtitle="A.D.I.E. - Advanced Interactive Editor using the FOX toolkit"\
-	command="%{_bindir}/adie"\
-	icon=%{icon_name_adie} xdg="true"
-?package(%{name_ex_apps}):\
-	needs="X11"\
-	section="Multimedia/Graphics"\
-	title="FOX Shutterbug"\
-	longtitle="Takes a screenshot and saves it to a file"\
-	command="%{_bindir}/shutterbug"\
-	icon=shutterbug.png xdg="true"
-EOF
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
 [Desktop Entry]
-Name="FOX Calculator"
-Comment="Calculator using the FOX toolkit"
+Name=FOX Calculator
+Comment=Calculator using the FOX toolkit
 Exec=%{_bindir}/calculator %U
 Icon=%{icon_name_calc} 
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=MandrivaLinux-MoreApplications-Science-Mathematics;Science;Math;
+Categories=Science;Math;
 EOF
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxadie.desktop << EOF
 [Desktop Entry]
-Name="FOX Adie"
-Comment="A.D.I.E. - Advanced Interactive Editor using the FOX toolkit"
+Name=FOX Adie
+Comment=A.D.I.E. - Advanced Interactive Editor using the FOX toolkit
 Exec=%{_bindir}/adie %U
 Icon=%{icon_name_adie}
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=MandrivaLinux-MoreApplications-Editors;TextEditor;
+Categories=TextEditor;Utility;
 EOF
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-shutterbug.desktop << EOF
 [Desktop Entry]
-Name="FOX Shutterbug"
-Comment="Takes a screenshot and saves it to a file"
+Name=FOX Shutterbug
+Comment=Takes a screenshot and saves it to a file
 Exec=%{_bindir}/shutterbug %U
 Icon=shutterbug
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=MandrivaLinux-Multimedia-Graphics;Graphics;
+Categories=Graphics;
 EOF
 
 install -D -m 644 %{SOURCE10} %{buildroot}%{_miconsdir}/%{icon_name_adie}
@@ -199,7 +176,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/Adie.stx
 %{_bindir}/shutterbug
 %_datadir/applications/mandriva*
-%{_menudir}/%{name_ex_apps}
 %{_miconsdir}/%{icon_name_adie}
 %{_iconsdir}/%{icon_name_adie}
 %{_liconsdir}/%{icon_name_adie}
