@@ -29,7 +29,6 @@ Source12:	%{name}_adie_48.png
 Source20:	%{name}_calc_16.png
 Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libmesaglu-devel
 BuildRequires:  libcups-devel
 BuildRequires:  libbzip2-devel
