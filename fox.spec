@@ -159,11 +159,15 @@ rm -rf %buildroot%_prefix/fox
 %postun -n %{libname} -p /sbin/ldconfig
 %endif
 
+%if %mdkversion < 200900
 %post -n %{name_ex_apps}
 %{update_menus}
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{name_ex_apps}
 %{clean_menus}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
