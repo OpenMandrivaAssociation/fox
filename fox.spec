@@ -2,7 +2,7 @@
 
 %define name		fox
 %define version 1.7.13
-%define release %mkrel 1
+%define release %mkrel 3
 
 %define libname		%mklibname %{name} %{major}
 %define libnamedev	%mklibname -d %{name}
