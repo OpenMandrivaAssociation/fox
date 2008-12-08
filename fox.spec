@@ -33,6 +33,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	libmesaglu-devel
 BuildRequires:  libcups-devel
 BuildRequires:  libbzip2-devel
+BuildRequires:  libxi-devel
 
 %description
 FOX is a C++-Based Library for Graphical User Interface Development
@@ -175,11 +176,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{name_ex_apps}
 %defattr(-,root,root)
+%doc %{_mandir}/man1/ControlPanel*
 %doc %{_mandir}/man1/PathFinder*
 %doc %{_mandir}/man1/adie*
 %doc %{_mandir}/man1/calculator*
 %doc %{_mandir}/man1/shutterbug.1*
 %{_bindir}/calculator
+%{_bindir}/ControlPanel
 %{_bindir}/PathFinder
 %{_bindir}/adie
 %{_bindir}/Adie.stx
