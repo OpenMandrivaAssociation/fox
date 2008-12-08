@@ -1,8 +1,8 @@
 %define major		1.7
 
 %define name		fox
-%define version 1.7.13
-%define release %mkrel 3
+%define version 1.7.18
+%define release %mkrel 1
 
 %define libname		%mklibname %{name} %{major}
 %define libnamedev	%mklibname -d %{name}
@@ -89,7 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 %setup -q
 
 %build
-
+#gw the examples don't link
+%define _disable_ld_no_undefined 1
 %configure2_5x --with-opengl=mesa --enable-cups
 
 make GL_LIBS="-lGL -lGLU"
