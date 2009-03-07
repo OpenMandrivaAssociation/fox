@@ -1,7 +1,7 @@
 %define major		1.7
 
 %define name		fox
-%define version 1.7.18
+%define version 1.7.19
 %define release %mkrel 1
 
 %define libname		%mklibname %{name} %{major}
@@ -85,27 +85,27 @@ This package contains the necessary files to develop applications
 with FOX.
 
 %prep
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %setup -q
 
 %build
 #gw the examples don't link
-%define _disable_ld_no_undefined 1
+##%define _disable_ld_no_undefined 1
 %configure2_5x --with-opengl=mesa --enable-cups
 
 make GL_LIBS="-lGL -lGLU"
 
 %install
-rm -rf $RPM_BUILD_ROOT installed-docs
+rm -rf %{buildroot} installed-docs
 %makeinstall_std
 mv %buildroot%_datadir/doc/fox-%{major}/* installed-docs
-cp -p pathfinder/PathFinder $RPM_BUILD_ROOT/usr/bin
+cp -p pathfinder/PathFinder %{buildroot}/usr/bin
 %multiarch_binaries %buildroot%_bindir/fox-config
 mkdir -p %{buildroot}%{_menudir}
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
 [Desktop Entry]
 Name=FOX Calculator
 Comment=Calculator using the FOX toolkit
@@ -116,7 +116,7 @@ Type=Application
 StartupNotify=true
 Categories=Science;Math;
 EOF
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-foxadie.desktop << EOF
+cat > %{buildroot}%{_datadir}/applications/mandriva-foxadie.desktop << EOF
 [Desktop Entry]
 Name=FOX Adie
 Comment=A.D.I.E. - Advanced Interactive Editor using the FOX toolkit
@@ -127,7 +127,7 @@ Type=Application
 StartupNotify=true
 Categories=TextEditor;Utility;
 EOF
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-shutterbug.desktop << EOF
+cat > %{buildroot}%{_datadir}/applications/mandriva-shutterbug.desktop << EOF
 [Desktop Entry]
 Name=FOX Shutterbug
 Comment=Takes a screenshot and saves it to a file
@@ -172,7 +172,7 @@ rm -rf %buildroot%_prefix/fox
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files -n %{name_ex_apps}
 %defattr(-,root,root)
