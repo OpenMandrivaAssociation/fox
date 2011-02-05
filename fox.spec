@@ -34,6 +34,7 @@ BuildRequires:	libmesaglu-devel
 BuildRequires:  libcups-devel
 BuildRequires:  libbzip2-devel
 BuildRequires:  libxi-devel
+BuildRequires:  libxft-devel
 
 %description
 FOX is a C++-Based Library for Graphical User Interface Development
