@@ -214,6 +214,6 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/*.a
 %attr(644,root,root) %{_libdir}/*.la
-%_libdir/pkgconfig/fox.pc
+%_libdir/pkgconfig/*.pc
 
 
