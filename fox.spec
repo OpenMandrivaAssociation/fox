@@ -103,10 +103,6 @@ rm -rf %{buildroot} installed-docs
 mv %buildroot%_datadir/doc/fox-%{major}/* installed-docs
 cp -p pathfinder/PathFinder %{buildroot}/usr/bin
 
-%multiarch_binaries %buildroot%_bindir/fox-config
-
-mkdir -p %{buildroot}%{_menudir}
-
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
 [Desktop Entry]
@@ -213,8 +209,6 @@ rm -rf %{buildroot}
 %doc installed-docs
 %doc %{_mandir}/man1/reswrap*
 %{_bindir}/reswrap
-%_bindir/fox-config
-%multiarch_bindir/fox-config
 %dir %{_includedir}/fox-%{major}
 %{_includedir}/fox-%{major}/*
 %{_libdir}/*.so
