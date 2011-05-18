@@ -102,7 +102,9 @@ rm -rf %{buildroot} installed-docs
 %makeinstall_std
 mv %buildroot%_datadir/doc/fox-%{major}/* installed-docs
 cp -p pathfinder/PathFinder %{buildroot}/usr/bin
+
 %multiarch_binaries %buildroot%_bindir/fox-config
+
 mkdir -p %{buildroot}%{_menudir}
 
 mkdir -p %{buildroot}%{_datadir}/applications
