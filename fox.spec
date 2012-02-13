@@ -1,7 +1,7 @@
 %define major		1.7
 
 %define name		fox
-%define version 1.7.26
+%define version 1.7.32
 %define release %mkrel 1
 
 %define libname		%mklibname %{name} %{major}
@@ -29,12 +29,14 @@ Source12:	%{name}_adie_48.png
 Source20:	%{name}_calc_16.png
 Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	libmesaglu-devel
-BuildRequires:  libcups-devel
-BuildRequires:  libbzip2-devel
-BuildRequires:  libxi-devel
-BuildRequires:  libxft-devel
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	cups-devel
+BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xft)
+BuildRequires:	freetype-devel
+BuildRequires:	doxygen
+
 
 %description
 FOX is a C++-Based Library for Graphical User Interface Development
@@ -86,15 +88,12 @@ This package contains the necessary files to develop applications
 with FOX.
 
 %prep
-rm -rf %{buildroot}
-
 %setup -q
 
 %build
 #gw the examples don't link
-##%define _disable_ld_no_undefined 1
-%configure2_5x --with-opengl=mesa --enable-cups
-
+##define _disable_ld_no_undefined 1
+%configure2_5x --with-opengl=mesa --enable-cups LIBS='-lfontconfig'
 make GL_LIBS="-lGL -lGLU"
 
 %install
@@ -109,7 +108,7 @@ cat > %{buildroot}%{_datadir}/applications/mandriva-foxcalculator.desktop << EOF
 Name=FOX Calculator
 Comment=Calculator using the FOX toolkit
 Exec=%{_bindir}/calculator %U
-Icon=%{icon_name_calc} 
+Icon=%{icon_name_calc}
 Terminal=false
 Type=Application
 StartupNotify=true
@@ -152,24 +151,6 @@ install -m 644 %{SOURCE3} %{buildroot}%{_liconsdir}/shutterbug.png
 
 rm -rf %buildroot%_prefix/fox
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%post -n %{name_ex_apps}
-%{update_menus}
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{name_ex_apps}
-%{clean_menus}
-%endif
-
 %clean
 rm -rf %{buildroot}
 
@@ -186,7 +167,7 @@ rm -rf %{buildroot}
 %{_bindir}/adie
 %{_bindir}/Adie.stx
 %{_bindir}/shutterbug
-%_datadir/applications/mandriva*
+%{_datadir}/applications/mandriva*
 %{_miconsdir}/%{icon_name_adie}
 %{_iconsdir}/%{icon_name_adie}
 %{_liconsdir}/%{icon_name_adie}
@@ -214,6 +195,6 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/*.a
 %attr(644,root,root) %{_libdir}/*.la
-%_libdir/pkgconfig/*.pc
+%{_libdir}/pkgconfig/*.pc
 
 
