@@ -1,25 +1,21 @@
 %define major		1.7
 
-%define name		fox
-%define version 1.7.32
-%define release %mkrel 1
-
 %define libname		%mklibname %{name} %{major}
 %define libnamedev	%mklibname -d %{name}
-
 %define name_ex_apps	%{name}-example-apps
 
 %define icon_name_calc	%{name}-calculator.png
 %define icon_name_adie	%{name}-adie.png
+%define	debug_package	%nil
 
 Summary:	The FOX C++ GUI Toolkit
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		fox
+Version:	1.7.40
+Release:	1
 License:	LGPLv2+
 Group:		Development/C++
 URL:		http://www.fox-toolkit.org
-Source: 	http://www.fox-toolkit.org/ftp/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.fox-toolkit.org/pub/%{name}-%{version}.tar.gz
 Source1:	fox-shutterbug-16.png
 Source2:	fox-shutterbug-32.png
 Source3:	fox-shutterbug-48.png
@@ -94,7 +90,7 @@ with FOX.
 #gw the examples don't link
 ##define _disable_ld_no_undefined 1
 %configure2_5x --with-opengl=mesa --enable-cups LIBS='-lfontconfig'
-make GL_LIBS="-lGL -lGLU"
+%make GL_LIBS="-lGL -lGLU"
 
 %install
 rm -rf %{buildroot} installed-docs
@@ -151,11 +147,7 @@ install -m 644 %{SOURCE3} %{buildroot}%{_liconsdir}/shutterbug.png
 
 rm -rf %buildroot%_prefix/fox
 
-%clean
-rm -rf %{buildroot}
-
 %files -n %{name_ex_apps}
-%defattr(-,root,root)
 %doc %{_mandir}/man1/ControlPanel*
 %doc %{_mandir}/man1/PathFinder*
 %doc %{_mandir}/man1/adie*
@@ -167,6 +159,7 @@ rm -rf %{buildroot}
 %{_bindir}/adie
 %{_bindir}/Adie.stx
 %{_bindir}/shutterbug
+%{_bindir}/fox-config
 %{_datadir}/applications/mandriva*
 %{_miconsdir}/%{icon_name_adie}
 %{_iconsdir}/%{icon_name_adie}
@@ -178,14 +171,11 @@ rm -rf %{buildroot}
 %{_iconsdir}/shutterbug.png
 %{_liconsdir}/shutterbug.png
 
-
 %files -n %{libname}
-%defattr(-,root,root)
 %doc AUTHORS LICENSE README
 %{_libdir}/*%{major}.so.0*
 
 %files -n %{libnamedev}
-%defattr(-,root,root)
 %doc doc ADDITIONS INSTALL TRACING
 %doc installed-docs
 %doc %{_mandir}/man1/reswrap*
@@ -193,7 +183,6 @@ rm -rf %{buildroot}
 %dir %{_includedir}/fox-%{major}
 %{_includedir}/fox-%{major}/*
 %{_libdir}/*.so
-%{_libdir}/*.a
 %{_libdir}/pkgconfig/*.pc
 
 
