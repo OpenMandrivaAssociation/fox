@@ -8,9 +8,11 @@
 %define icon_name_adie	%{name}-adie.png
 %define	debug_package	%nil
 
+%define _disable_rebuild_configure 1
+
 Summary:	The FOX C++ GUI Toolkit
 Name:		fox
-Version:	1.7.41
+Version:	1.7.52
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
@@ -159,7 +161,6 @@ rm -rf %buildroot%_prefix/fox
 %{_bindir}/adie
 %{_bindir}/Adie.stx
 %{_bindir}/shutterbug
-%{_bindir}/fox-config
 %{_datadir}/applications/mandriva*
 %{_miconsdir}/%{icon_name_adie}
 %{_iconsdir}/%{icon_name_adie}
@@ -180,6 +181,7 @@ rm -rf %buildroot%_prefix/fox
 %doc installed-docs
 %doc %{_mandir}/man1/reswrap*
 %{_bindir}/reswrap
+%{_bindir}/fox-config
 %dir %{_includedir}/fox-%{major}
 %{_includedir}/fox-%{major}/*
 %{_libdir}/*.so
