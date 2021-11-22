@@ -6,13 +6,13 @@
 
 %define icon_name_calc	%{name}-calculator.png
 %define icon_name_adie	%{name}-adie.png
-%define	debug_package	%nil
 
 %define _disable_rebuild_configure 1
+%define _empty_manifest_terminate_build 0
 
 Summary:	The FOX C++ GUI Toolkit
 Name:		fox
-Version:	1.7.75
+Version:	1.7.77
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
