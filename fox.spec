@@ -12,12 +12,12 @@
 
 Summary:	The FOX C++ GUI Toolkit
 Name:		fox
-Version:	1.7.78
+Version:	1.7.79
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
 URL:		http://www.fox-toolkit.org
-Source0:	ftp://ftp.fox-toolkit.org/pub/%{name}-%{version}.tar.gz
+Source0:	http://fox-toolkit.org/ftp/fox-%{version}.tar.gz
 Source1:	fox-shutterbug-16.png
 Source2:	fox-shutterbug-32.png
 Source3:	fox-shutterbug-48.png
@@ -27,6 +27,7 @@ Source12:	%{name}_adie_48.png
 Source20:	%{name}_calc_16.png
 Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
+Patch0:		fox-1.7.79-compile.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	cups-devel
 BuildRequires:	bzip2-devel
@@ -86,17 +87,17 @@ This package contains the necessary files to develop applications
 with FOX.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 #gw the examples don't link
 ##define _disable_ld_no_undefined 1
-%configure2_5x --with-opengl=mesa --enable-cups LIBS='-lfontconfig'
+%configure --with-opengl=mesa --enable-cups LIBS='-lfontconfig'
 %make GL_LIBS="-lGL -lGLU"
 
 %install
 rm -rf %{buildroot} installed-docs
-%makeinstall_std
+%make_install
 mv %buildroot%_datadir/doc/fox-%{major}/* installed-docs
 cp -p pathfinder/PathFinder %{buildroot}/usr/bin
 
@@ -146,6 +147,8 @@ install -m 644 %{SOURCE22} %{buildroot}%{_liconsdir}/%{icon_name_calc}
 install -m 644 %{SOURCE1} %{buildroot}%{_miconsdir}/shutterbug.png
 install -m 644 %{SOURCE2} %{buildroot}%{_iconsdir}/shutterbug.png
 install -m 644 %{SOURCE3} %{buildroot}%{_liconsdir}/shutterbug.png
+
+ln -s fox17.pc %{buildroot}%{_libdir}/pkgconfig/fox.pc
 
 rm -rf %buildroot%_prefix/fox
 

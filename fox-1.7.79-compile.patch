@@ -1,0 +1,21 @@
+diff -up fox-1.7.79/lib/FXRex.cpp.omv~ fox-1.7.79/lib/FXRex.cpp
+--- fox-1.7.79/lib/FXRex.cpp.omv~	2022-09-26 03:12:07.772888307 +0200
++++ fox-1.7.79/lib/FXRex.cpp	2022-09-26 03:12:38.265056930 +0200
+@@ -4673,7 +4673,7 @@ FXRex::FXRex(const FXString& pattern,FXi
+ /*******************************************************************************/
+ 
+ #ifdef TOPIC_REXDUMP
+-#include "fxrexdbg.h"
++//#include "fxrexdbg.h"
+ #endif
+ 
+ 
+@@ -4715,7 +4715,7 @@ FXRex::Error FXRex::parse(const FXchar*
+                 // Install new program
+                 code=prog;
+ #ifdef TOPIC_REXDUMP
+-                if(getTraceTopic(TOPIC_REXDUMP)){ dump(adjustedpattern,code); }
++//                if(getTraceTopic(TOPIC_REXDUMP)){ dump(adjustedpattern,code); }
+ #endif
+                 freeElms(adjustedpattern);
+                 return ErrOK;
