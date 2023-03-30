@@ -1,6 +1,7 @@
-%define major		1.7
+%define major		%(echo %{version} |cut -d. -f1-2)
 
-%define libname		%mklibname %{name} %{major}
+%define oldlibname	%mklibname %{name} 1.7
+%define libname		%mklibname %{name}
 %define libnamedev	%mklibname -d %{name}
 %define name_ex_apps	%{name}-example-apps
 
@@ -8,11 +9,11 @@
 %define icon_name_adie	%{name}-adie.png
 
 %define _disable_rebuild_configure 1
-%define _empty_manifest_terminate_build 0
+%undefine _debugsource_packages
 
 Summary:	The FOX C++ GUI Toolkit
 Name:		fox
-Version:	1.7.80
+Version:	1.7.82
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
@@ -27,7 +28,6 @@ Source12:	%{name}_adie_48.png
 Source20:	%{name}_calc_16.png
 Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
-Patch0:		fox-1.7.79-compile.patch
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	cups-devel
 BuildRequires:	bzip2-devel
@@ -56,6 +56,7 @@ Editor, file browser and calculator, written with FOX
 %package -n %{libname}
 Summary:	The FOX C++ GUI Toolkit - Libraries
 Group:		System/Libraries
+Obsoletes:	%{oldlibname} < %{EVRD}
 
 %description -n %{libname}
 FOX is a C++-Based Library for Graphical User Interface Development
