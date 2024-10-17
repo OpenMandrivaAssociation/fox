@@ -17,7 +17,7 @@ Version:	1.7.85
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
-URL:		http://www.fox-toolkit.org
+URL:		https://www.fox-toolkit.org
 Source0:	http://fox-toolkit.org/ftp/fox-%{version}.tar.gz
 Source1:	fox-shutterbug-16.png
 Source2:	fox-shutterbug-32.png
