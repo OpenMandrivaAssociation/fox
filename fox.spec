@@ -28,6 +28,11 @@ Source12:	%{name}_adie_48.png
 Source20:	%{name}_calc_16.png
 Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	cups-devel
 BuildRequires:	bzip2-devel
