@@ -13,12 +13,12 @@
 
 Summary:	The FOX C++ GUI Toolkit
 Name:		fox
-Version:	1.7.90
+Version:	1.7.92
 Release:	1
 License:	LGPLv2+
 Group:		Development/C++
 URL:		https://www.fox-toolkit.org
-Source0:	http://fox-toolkit.org/ftp/fox-%{version}.tar.gz
+Source0:	https://fox-toolkit.org/ftp/fox-%{version}.tar.gz
 Source1:	fox-shutterbug-16.png
 Source2:	fox-shutterbug-32.png
 Source3:	fox-shutterbug-48.png
@@ -30,15 +30,14 @@ Source21:	%{name}_calc_32.png
 Source22:	%{name}_calc_48.png
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(glu)
-BuildRequires:	cups-devel
-BuildRequires:	bzip2-devel
+BuildRequires:	pkgconfig(cups)
+BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xft)
-BuildRequires:	freetype-devel
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	doxygen
 
 
@@ -53,7 +52,7 @@ extension beyond the built-in widgets by application writers.
 %package -n %{name_ex_apps}
 Summary:	FOX example applications
 Group:		Office
-Requires:	%{libname} >= %{version}
+Requires:	%{libname} = %{EVRD}
 
 %description -n %{name_ex_apps}
 Editor, file browser and calculator, written with FOX
@@ -74,7 +73,7 @@ extension beyond the built-in widgets by application writers.
 %package -n %{libnamedev}
 Summary:	FOX header files
 Group:		Development/C++
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{EVRD}
 Provides:	libfox-devel = %version-%release
 Provides:	fox%{major}-devel = %version-%release
 Provides:	libfox%{major}-devel = %version-%release
